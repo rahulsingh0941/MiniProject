@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Place Your Order - BrandMyBottle</title>
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    (function () {
+      emailjs.init("kaQ4qf4gImrx-fWx9"); // public key
+    })();
+  </script>  
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background-color: #111;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      letter-spacing: 1px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background: white;
+      padding: 40px 50px;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #111;
+      margin-bottom: 25px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+      transition: border 0.3s;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+
+    textarea {
+      resize: none;
+    }
+
+    button {
+      background-color: #111;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #007bff;
+    }
+
+    .quick-links {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .quick-links h3 {
+      color: #222;
+      margin-bottom: 15px;
+    }
+
+    .quick-links a {
+      display: inline-block;
+      margin: 8px 12px;
+      padding: 10px 20px;
+      background: #111;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: 0.3s ease;
+    }
+
+    .quick-links a:hover {
+      background: #007bff;
+    }
+
+    footer {
+      text-align: center;
+      background-color: #111;
+      color: white;
+      padding: 15px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Place Your Order</h1>
+  </header>
+
+  <section>
+    <div class="container">
+      <h2>Order Form</h2>
+      <form id="loadForm">
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="text" name="phone" placeholder="Your Phone Number" required />
+        <input type="text" name="bottle" placeholder="Bottle Type (Steel/Plastic and 500ml/750ml)" required />
+        <input type="text" name="quantity" placeholder="Quantity (min 100 pieces)" required />
+        <textarea name="address" rows="4" placeholder="Your Address" required></textarea>
+        <button type="submit">Submit Order</button>
+      </form>
+    </div>
+  </section>
+
+  <div class="quick-links">
+    <h3>🔗 Quick Links</h3>
+    <a href="index.html">🏠 Home</a>
+    <a href="customize.html">🧴 Customize</a>
+    <a href="contact.html">📞 Contact</a>
+  </div>
+
+  <footer>
+    <p>© 2025 BrandMyBottle. All rights reserved.</p>
+  </footer>
+
+  <script src="javascript/script1.js"></script>
+  <script src="javascript/emailJS.js"></script>  
+</body>
+</html>

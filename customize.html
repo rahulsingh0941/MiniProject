@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customize Your Bottle - BrandMyBottle</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #111;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #222;
+    }
+    .customize-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .custom-form {
+      flex: 1;
+      min-width: 300px;
+      margin-right: 30px;
+    }
+    .custom-form label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .custom-form input[type="file"],
+    .custom-form input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    .custom-form button {
+      background-color: #111;
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .custom-form button:hover {
+      background-color: #007bff;
+    }
+    .preview {
+      flex: 1;
+      min-width: 300px;
+      text-align: center;
+    }
+    .preview img {
+      width: 300px;
+      height: auto;
+      position: relative;
+    }
+    .preview-text {
+      position: absolute;
+      top: 55%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #000;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .note {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+      color: #777;
+    }
+    .quick-links {
+      text-align: center;
+      margin-top: 40px;
+    }
+    .quick-links h3 {
+      color: #222;
+      margin-bottom: 15px;
+    }
+    .quick-links a {
+      display: inline-block;
+      margin: 8px 12px;
+      padding: 10px 20px;
+      background: #111;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: 0.3s ease;
+    }
+    .quick-links a:hover {
+      background: #007bff;
+    }
+    footer {
+      text-align: center;
+      background-color: #111;
+      color: white;
+      padding: 15px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Customize Your Bottle</h1>
+  </header>
+
+  <div class="container">
+    <h2>Design Your Personalized Bottle</h2>
+    <div class="customize-section">
+      <div class="custom-form">
+        <label for="upload">Upload Your Logo / Image:</label>
+        <input type="file" id="upload" accept="image/*">
+
+        <label for="customText">Add Custom Text:</label>
+        <input type="text" id="customText" placeholder="Enter your text (e.g., Your Name)">
+
+        <button onclick="updatePreview()">Preview Design</button>
+      </div>
+
+      <div class="preview" id="previewContainer">
+        <div style="position: relative; display: inline-block;">
+          <img id="bottleImage" src="image/img4.jpg" alt="Bottle Preview">
+          <img id="uploadedImage" style="position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); max-width: 100px; display: none;" />
+          <div id="textOverlay" class="preview-text"></div>
+        </div>
+        <p class="note">(Mockup only — final print will be adjusted for label wrap and material)</p>
+      </div>
+    </div>
+
+    <div class="quick-links">
+      <h3>🔗 Quick Links</h3>
+      <a href="index.html">🏠 Home</a>
+      <a href="contact.html">📞 Contact</a>
+      <a href="order.html">🛒 Order Now</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 BrandMyBottle. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const uploadInput = document.getElementById('upload');
+    const uploadedImage = document.getElementById('uploadedImage');
+    const textOverlay = document.getElementById('textOverlay');
+    const customTextInput = document.getElementById('customText');
+
+    uploadInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          uploadedImage.src = event.target.result;
+          uploadedImage.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+      }
+    });
+
+    function updatePreview() {
+      const customText = customTextInput.value.trim();
+      textOverlay.textContent = customText;
+    }
+  </script>
+</body>
+</html>
