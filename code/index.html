@@ -7,6 +7,10 @@
   <meta name="description" content="BrandMyBottle — premium custom-branded water bottles for events, weddings, restaurants, hotels and corporate promotions. Logo design, label mockups, bulk orders & delivery."/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
   <style>
     :root{
       --bg:#08131f;
@@ -18,164 +22,47 @@
       --glass:rgba(255,255,255,0.05);
       --radius:14px;
     }
-
     *{box-sizing:border-box;scroll-behavior:smooth}
-    body{
-      font-family:"Inter",system-ui,Segoe UI,Roboto,Arial;
-      margin:0;
-      color:#eaf4f9;
-      background:linear-gradient(180deg,var(--bg),#071727);
-    }
-
-    header{
-      position:sticky;top:0;
-      backdrop-filter:blur(8px);
-      background:rgba(6,12,20,0.75);
-      border-bottom:1px solid rgba(255,255,255,0.05);
-      z-index:50;
-    }
-
+    body{font-family:"Inter",system-ui,Segoe UI,Roboto,Arial;margin:0;color:#eaf4f9;background:linear-gradient(180deg,var(--bg),#071727);}
+    header{position:sticky;top:0;backdrop-filter:blur(8px);background:rgba(6,12,20,0.75);border-bottom:1px solid rgba(255,255,255,0.05);z-index:50;}
     .container{max-width:1200px;margin:0 auto;padding:0 20px;}
     .nav{display:flex;align-items:center;gap:20px;height:72px;}
     .logo{display:flex;align-items:center;gap:12px;}
-    .logo-mark{
-      width:46px;height:46px;
-      border-radius:10px;
-      background:linear-gradient(135deg,var(--accent),var(--accent-2));
-      display:grid;place-items:center;
-      font-weight:800;color:#07202a;font-size:18px;
-    }
-
-    nav a{
-      color:rgba(230,242,247,0.9);
-      text-decoration:none;
-      font-weight:600;
-      margin-left:18px;
-      transition:color 0.3s;
-    }
+    .logo-mark{width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center;font-weight:800;color:#07202a;font-size:18px;}
+    nav{display:flex;align-items:center;margin-left:auto;gap:16px;}
+    nav a{color:rgba(230,242,247,0.9);text-decoration:none;font-weight:600;transition:color 0.3s;}
     nav a:hover{color:var(--accent-2);}
-
-    /* Hero */
+    .nav-btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#042427;padding:8px 16px;border-radius:10px;font-weight:700;text-decoration:none;transition:transform 0.2s, box-shadow 0.2s;cursor:pointer;}
+    .nav-btn:hover{transform:scale(1.07);box-shadow:0 0 8px rgba(0,209,255,0.4);}
+    .nav-btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--muted);}
+    .nav-btn.ghost:hover{border-color:var(--accent-2);color:var(--accent-2);}
     .hero{padding:90px 0 70px;text-align:center;}
-    h1{
-      font-size:48px;line-height:1.1;
-      margin:0 auto;max-width:800px;
-      letter-spacing:-0.5px;
-      background:linear-gradient(90deg,var(--accent),var(--accent-2));
-      -webkit-background-clip:text;
-      color:transparent;
-    }
-    .sub{
-      color:var(--muted);
-      font-size:17px;
-      margin:16px auto 0;
-      max-width:720px;
-    }
+    h1{font-size:48px;line-height:1.1;margin:0 auto;max-width:800px;letter-spacing:-0.5px;background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;color:transparent;}
+    .sub{color:var(--muted);font-size:17px;margin:16px auto 0;max-width:720px;}
     .ctas{margin-top:26px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap;}
-    .btn{
-      background:linear-gradient(90deg,var(--accent),var(--accent-2));
-      color:#042427;
-      padding:14px 20px;
-      border-radius:12px;
-      font-weight:700;
-      text-decoration:none;
-      transition:transform .2s;
-    }
+    .btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#042427;padding:14px 20px;border-radius:12px;font-weight:700;text-decoration:none;transition:transform .2s;}
     .btn:hover{transform:scale(1.05);}
-    .btn.ghost{
-      background:transparent;
-      border:1px solid rgba(255,255,255,0.12);
-      color:var(--muted);
-    }
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.12);color:var(--muted);}
     .btn.ghost:hover{color:var(--accent-2);border-color:var(--accent-2);}
-
     .kpi{display:flex;gap:12px;justify-content:center;margin-top:18px;flex-wrap:wrap;}
-    .kpi div{
-      background:var(--glass);
-      padding:10px 14px;
-      border-radius:10px;
-      color:var(--muted);
-      font-weight:600;
-    }
-
-    /* Sections */
-    section h2{
-      text-align:center;
-      font-size:28px;
-      margin-bottom:10px;
-      background:linear-gradient(90deg,var(--accent),var(--accent-2));
-      -webkit-background-clip:text;
-      color:transparent;
-    }
-
-    .features{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-      gap:20px;
-      margin:30px 0 50px;
-    }
-    .feature-card{
-      background:var(--glass);
-      border-radius:14px;
-      padding:24px;
-      text-align:center;
-      transition:transform 0.2s,border-color 0.2s;
-      border:1px solid rgba(255,255,255,0.05);
-    }
-    .feature-card:hover{
-      transform:translateY(-4px);
-      border-color:var(--accent-2);
-    }
+    .kpi div{background:var(--glass);padding:10px 14px;border-radius:10px;color:var(--muted);font-weight:600;}
+    section h2{text-align:center;font-size:28px;margin-bottom:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;color:transparent;}
+    .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin:30px 0 50px;}
+    .feature-card{background:var(--glass);border-radius:14px;padding:24px;text-align:center;transition:transform 0.2s,border-color 0.2s;border:1px solid rgba(255,255,255,0.05);}
+    .feature-card:hover{transform:translateY(-4px);border-color:var(--accent-2);}
     .feature-card h3{margin:0 0 8px;font-size:20px;}
     .feature-card p{color:var(--muted);margin:0;font-size:15px;}
-
     .how{margin:40px 0;max-width:800px;margin-inline:auto;}
     .steps{display:flex;flex-direction:column;gap:14px;}
-    .step{
-      background:rgba(255,255,255,0.03);
-      padding:16px;
-      border-radius:12px;
-      border-left:4px solid var(--accent);
-      color:#dbe8f0;
-      font-weight:500;
-    }
-
-    /* Gallery */
+    .step{background:rgba(255,255,255,0.03);padding:16px;border-radius:12px;border-left:4px solid var(--accent);color:#dbe8f0;font-weight:500;}
     #gallery{margin:60px 0;text-align:center;}
-    #gallery img{
-      width:100%;
-      border-radius:16px;
-      transition:transform .3s, box-shadow .3s;
-    }
-    #gallery img:hover{
-      transform:scale(1.04);
-      box-shadow:0 6px 16px rgba(0,0,0,0.4);
-    }
-    .gallery-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-      gap:20px;
-      max-width:900px;
-      margin:0 auto;
-    }
-
-    footer{
-      margin-top:60px;
-      padding:28px 0;
-      border-top:1px solid rgba(255,255,255,0.05);
-      color:var(--muted);
-      text-align:center;
-      font-size:14px;
-    }
-
-    @media (max-width:768px){
-      h1{font-size:34px;}
-      .hero{padding:70px 0 50px;}
-      nav a{margin-left:10px;font-size:14px;}
-    }
+    #gallery img{width:100%;border-radius:16px;transition:transform .3s, box-shadow .3s;}
+    #gallery img:hover{transform:scale(1.04);box-shadow:0 6px 16px rgba(0,0,0,0.4);}
+    .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;max-width:900px;margin:0 auto;}
+    footer{margin-top:60px;padding:28px 0;border-top:1px solid rgba(255,255,255,0.05);color:var(--muted);text-align:center;font-size:14px;}
+    @media (max-width:768px){h1{font-size:34px;}.hero{padding:70px 0 50px;}nav a{font-size:14px;}.nav-btn{padding:6px 10px;font-size:13px;}}
   </style>
 </head>
-
 <body>
   <header>
     <div class="container nav">
@@ -186,11 +73,12 @@
           <div style="font-size:12px;color:var(--muted)">Custom-branded water bottles</div>
         </div>
       </div>
-      <nav style="margin-left:auto">
+      <nav id="navbar">
         <a href="#how">How it works</a>
         <a href="customize.html">Customize</a>
         <a href="order.html">Order</a>
-        <a href="contact.html">Contact</a>
+        <a href="#contact">Contact</a>
+        <!-- Login/Signup will be added dynamically by JS -->
       </nav>
     </div>
   </header>
@@ -199,12 +87,10 @@
     <section class="hero">
       <h1>Turn every bottle into a moving billboard.</h1>
       <p class="sub">BrandMyBottle helps brands, events, and hotels create high-impact advertising and memorable keepsakes using premium custom-labelled water bottles. Upload your logo or ask our designers — we print, package, and deliver.</p>
-
       <div class="ctas">
         <a class="btn" href="#contact">Get a Quote</a>
         <a class="btn ghost" href="#services">Explore Services</a>
       </div>
-
       <div class="kpi">
         <div>Bulk MOQ from 500+</div>
         <div>Fast turnaround</div>
@@ -212,6 +98,7 @@
       </div>
     </section>
 
+    <!-- Services, How it works, Gallery, Contact, Footer sections unchanged -->
     <section id="services">
       <h2>Services we provide</h2>
       <div class="features">
@@ -241,22 +128,18 @@
       </div>
     </section>
 
-
     <section id="gallery">
-  <h2>Gallery</h2>
-  <p style="color:var(--muted);margin-bottom:20px;">
-    Some of our beautifully customized bottles for various brands and events.
-  </p>
-
-  <div class="gallery-grid">
-    <img src="image/img1.jpg" alt="Branded Bottle 1">
-    <img src="image/img2.jpg" alt="Branded Bottle 2">
-    <img src="image/img3.jpg" alt="Branded Bottle 3">
-    <img src="image/img4.jpg" alt="Branded Bottle 4">
-    <img src="image/img5.jpg" alt="Branded Bottle 5">
-    <img src="image/img6.jpg" alt="Branded Bottle 6">
-  </div>
-</section>
+      <h2>Gallery</h2>
+      <p style="color:var(--muted);margin-bottom:20px;">Some of our beautifully customized bottles for various brands and events.</p>
+      <div class="gallery-grid">
+        <img src="image/img1.jpg" alt="Branded Bottle 1">
+        <img src="image/img2.jpg" alt="Branded Bottle 2">
+        <img src="image/img3.jpg" alt="Branded Bottle 3">
+        <img src="image/img4.jpg" alt="Branded Bottle 4">
+        <img src="image/img5.jpg" alt="Branded Bottle 5">
+        <img src="image/img6.jpg" alt="Branded Bottle 6">
+      </div>
+    </section>
 
     <section id="contact">
       <h2>Contact & Distribution</h2>
@@ -268,5 +151,43 @@
       <div>&copy; BrandMyBottle — All rights reserved<br>Designed for high-impact brand visibility</div>
     </footer>
   </main>
+
+  <script>
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    const navbar = document.getElementById('navbar');
+
+    function renderNavbar(user){
+      navbar.innerHTML = `
+        <a href="#how">How it works</a>
+        <a href="customize.html">Customize</a>
+        <a href="order.html">Order</a>
+        <a href="#contact">Contact</a>
+      `;
+      if(user){
+        navbar.innerHTML += `<a class="nav-btn" id="logoutBtn">Logout</a>`;
+        document.getElementById('logoutBtn').addEventListener('click', ()=>{auth.signOut();});
+      } else {
+        navbar.innerHTML += `
+          <a href="login.html" class="nav-btn ghost">Login</a>
+          <a href="signup.html" class="nav-btn">Sign Up</a>
+        `;
+      }
+    }
+
+    auth.onAuthStateChanged(user => {
+      renderNavbar(user);
+    });
+  </script>
 </body>
 </html>

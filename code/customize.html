@@ -44,7 +44,7 @@
     }
     .custom-form label {
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       font-weight: 600;
     }
     .custom-form input[type="file"],
@@ -67,6 +67,7 @@
     .custom-form button:hover {
       background-color: #007bff;
     }
+
     .preview {
       flex: 1;
       min-width: 300px;
@@ -75,17 +76,46 @@
     .preview img {
       width: 300px;
       height: auto;
-      position: relative;
+      border-radius: 10px;
     }
-    .preview-text {
+
+    /* Image wrapper for overlay positioning */
+    .image-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    /* Center uploaded logo */
+    #uploadedImage {
+      position: absolute;
+      top: 55%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 100px;
+      max-height: 100px;
+      display: none;
+      border-radius: 8px;
+      transition: 0.3s ease;
+    }
+
+    /* Center text perfectly */
+    #textOverlay {
       position: absolute;
       top: 55%;
       left: 50%;
       transform: translate(-50%, -50%);
       color: #000;
-      font-weight: bold;
-      font-size: 18px;
+      font-weight: 700;
+      font-size: 20px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.6);
+      padding: 5px 12px;
+      border-radius: 6px;
+      white-space: nowrap;
+      display: none;
+      transition: 0.3s ease;
     }
+
     .note {
       text-align: center;
       margin-top: 15px;
@@ -141,10 +171,10 @@
       </div>
 
       <div class="preview" id="previewContainer">
-        <div style="position: relative; display: inline-block;">
-          <img id="bottleImage" src="image/img4.jpg" alt="Bottle Preview">
-          <img id="uploadedImage" style="position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); max-width: 100px; display: none;" />
-          <div id="textOverlay" class="preview-text"></div>
+        <div class="image-wrapper">
+          <img id="bottleImage" src="image/img7.jpg" alt="Bottle Preview">
+          <img id="uploadedImage" alt="Uploaded Logo">
+          <div id="textOverlay"></div>
         </div>
         <p class="note">(Mockup only — final print will be adjusted for label wrap and material)</p>
       </div>
@@ -168,6 +198,7 @@
     const textOverlay = document.getElementById('textOverlay');
     const customTextInput = document.getElementById('customText');
 
+    // Preview uploaded image at center
     uploadInput.addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (file) {
@@ -180,9 +211,15 @@
       }
     });
 
+    // Update text preview and center it
     function updatePreview() {
       const customText = customTextInput.value.trim();
-      textOverlay.textContent = customText;
+      if (customText) {
+        textOverlay.textContent = customText;
+        textOverlay.style.display = 'block';
+      } else {
+        textOverlay.style.display = 'none';
+      }
     }
   </script>
 </body>
