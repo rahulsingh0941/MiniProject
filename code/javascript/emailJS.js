@@ -1,5 +1,5 @@
-const YOUR_SERVICE_ID = "service_2ovqyob";
-const YOUR_TEMPLATE_ID = "template_ylgvoxh";
+const YOUR_SERVICE_ID = "service_ooif9kc";
+const YOUR_TEMPLATE_ID = "template_29s1yfh";
 
 document.getElementById('loadForm').addEventListener('submit', function (e) {
     e.preventDefault();
@@ -8,10 +8,10 @@ document.getElementById('loadForm').addEventListener('submit', function (e) {
 
     const data = {
       name: form.name.value,
-      role: form.phone.value,
-      pickup: form.bottle.value,
-      drop: form.quantity.value,
-      type: form.address.value
+      phone: form.phone.value,
+      bottle: form.bottle.value,
+      quantity: form.quantity.value,
+      address: form.address.value
     };
 
     emailjs.send(YOUR_SERVICE_ID, YOUR_TEMPLATE_ID, data)
