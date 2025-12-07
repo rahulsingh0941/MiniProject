@@ -5,12 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Place Your Order - BrandMyBottle</title>
 
+  <!-- EmailJS -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
   <script>
     (function () {
-      emailjs.init("IjhXDxGTJKqZ03Cyr"); // public key
+      emailjs.init("IjhXDxGTJKqZ03Cyr"); /* YOUR PUBLIC KEY */
     })();
-  </script>  
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 
   <style>
     body {
@@ -20,134 +24,115 @@
       padding: 0;
       color: #333;
     }
-
     header {
       background-color: #111;
       color: white;
       text-align: center;
       padding: 20px;
-      letter-spacing: 1px;
     }
-
     .container {
       max-width: 600px;
       margin: 50px auto;
       background: white;
-      padding: 40px 50px;
+      padding: 40px;
       border-radius: 15px;
       box-shadow: 0 6px 20px rgba(0,0,0,0.1);
     }
-
-    h2 {
-      text-align: center;
-      color: #111;
-      margin-bottom: 25px;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 12px 15px;
+    h2 { text-align: center; }
+    form { display: flex; flex-direction: column; gap: 18px; }
+    input, textarea, select {
+      padding: 12px;
       border-radius: 8px;
       border: 1px solid #ccc;
-      font-size: 15px;
-      transition: border 0.3s;
     }
-
-    input:focus, textarea:focus {
-      border-color: #007bff;
-      outline: none;
+    .price-box {
+      background: #eee;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: bold;
     }
-
-    textarea {
-      resize: none;
-    }
-
     button {
-      background-color: #111;
+      background: #111;
       color: white;
       border: none;
       padding: 12px;
       border-radius: 8px;
-      font-size: 16px;
       cursor: pointer;
-      transition: background 0.3s ease;
     }
-
-    button:hover {
-      background-color: #007bff;
-    }
+    button:hover { background: #007bff; }
 
     .quick-links {
       text-align: center;
       margin-top: 40px;
     }
-
     .quick-links h3 {
       color: #222;
       margin-bottom: 15px;
     }
-
     .quick-links a {
       display: inline-block;
       margin: 8px 12px;
       padding: 10px 20px;
-      background: #111;
+      background: #2d574c;
       color: white;
       border-radius: 8px;
       text-decoration: none;
       transition: 0.3s ease;
     }
-
     .quick-links a:hover {
       background: #007bff;
     }
-
-    footer {
-      text-align: center;
-      background-color: #111;
-      color: white;
-      padding: 15px;
-      margin-top: 40px;
-    }
   </style>
 </head>
+
 <body>
-  <header>
-    <h1>Place Your Order</h1>
-  </header>
 
-  <section>
-    <div class="container">
-      <h2>Order Form</h2>
-      <form id="loadForm">
-        <input type="text" name="name" placeholder="Your Name" required />
-        <input type="text" name="phone" placeholder="Your Phone Number" required />
-        <input type="text" name="bottle" placeholder="Bottle Type (Steel/Plastic and 500ml/750ml)" required />
-        <input type="text" name="quantity" placeholder="Quantity (min 100 pieces)" required />
-        <textarea name="address" rows="4" placeholder="Your Address" required></textarea>
-        <button type="submit">Submit Order</button>
-      </form>
-    </div>
-  </section>
+<header>
+  <h1>Place Your Order</h1>
+</header>
 
-  <div class="quick-links">
-    <h3>🔗 Quick Links</h3>
-    <a href="index.html">🏠 Home</a>
-    <a href="customize.html">🧴 Customize</a>
-    <a href="contact.html">📞 Contact</a>
+<section>
+  <div class="container">
+    <h2>Order Form</h2>
+
+    <form id="orderForm">
+
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="text" name="phone" placeholder="Your Phone Number" required>
+
+      <select id="bottleSize" name="bottleSize" required>
+        <option value="">Select Bottle Size</option>
+        <option value="500">500 ml – ₹4</option>
+        <option value="750">750 ml – ₹6</option>
+        <option value="1000">1 Litre – ₹8</option>
+      </select>
+
+      <input type="number" id="quantity" name="quantity" placeholder="Number of Bottles" required>
+
+      <div class="price-box" id="totalPrice">Total Price: ₹0</div>
+
+      <textarea name="address" rows="3" placeholder="Your Address" required></textarea>
+
+      <button type="submit">Submit Order</button>
+
+      <div class="quick-links">
+        <h3>🔗 Quick Links</h3>
+        <a href="index.html">🏠 Home</a>
+        <a href="customize.html">🧴 Customize</a>
+        <a href="contact.html">🛒 Contact us</a>
+      </div>
+    </form>
   </div>
+  
+</section>
 
-  <footer>
-    <p>© 2025 BrandMyBottle. All rights reserved.</p>
-  </footer>
+<footer style="text-align:center; padding:20px; background:#111; color:white;">
+  © 2025 BrandMyBottle.
+</footer>
 
-  <script src="javascript/script1.js"></script>
-  <script src="javascript/emailJS.js"></script>  
+<!-- Link External JS -->
+<script src="javascript/form.js"></script>
+
 </body>
 </html>
