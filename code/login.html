@@ -1,154 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Place Your Order - BrandMyBottle</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | BrandMyBottle</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>
-  (function() {
-    emailjs.init("IjhXDxGTJKqZ03Cyr"); // Replace with your EmailJS public key
-  })();
-</script>
+  <!-- Firebase v12 (Modular CDN) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup }
+    from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 
-<style>
-  body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f5f5f5;
-    margin: 0;
-    padding: 0;
-    color: #333;
-  }
-  header {
-    background-color: #111;
-    color: white;
-    text-align: center;
-    padding: 20px;
-  }
-  .container {
-    max-width: 600px;
-    margin: 50px auto;
-    background: white;
-    padding: 40px 50px;
-    border-radius: 15px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-  }
-  h2 { text-align: center; margin-bottom: 25px; }
-  form { display: flex; flex-direction: column; gap: 15px; }
-  input, select, textarea {
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 15px;
-  }
-  textarea { resize: none; }
-  button {
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    background-color: #111;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  button:hover { background-color: #007bff; }
-  .price-box {
-    background: #f1f1f1;
-    padding: 12px;
-    border-radius: 8px;
-    font-weight: bold;
-    text-align: center;
-    font-size: 18px;
-  }
-  footer { text-align: center; background: #111; color: white; padding: 15px; margin-top: 40px; }
-</style>
-</head>
-<body>
-
-<header>
-  <h1>Place Your Order</h1>
-</header>
-
-<div class="container">
-  <h2>Order Form</h2>
-  <form id="orderForm">
-    <input type="text" name="name" placeholder="Your Name" required />
-    <input type="text" name="phone" placeholder="Your Phone Number" required />
-
-    <select id="bottleSize" name="bottleSize" required>
-      <option value="">Select Bottle Size</option>
-      <option value="500">500 ml – ₹4</option>
-      <option value="750">750 ml – ₹6</option>
-      <option value="1000">1 Litre – ₹8</option>
-    </select>
-
-    <input type="number" id="quantity" name="quantity" placeholder="Number of Bottles" min="1" required />
-
-    <div class="price-box" id="totalPrice">Total Price: ₹0</div>
-
-    <textarea name="address" rows="4" placeholder="Your Address" required></textarea>
-
-    <button type="submit">Submit Order</button>
-  </form>
-</div>
-
-<footer>
-  <p>© 2025 BrandMyBottle. All rights reserved.</p>
-</footer>
-
-<script>
-  const bottleSize = document.getElementById("bottleSize");
-  const quantity = document.getElementById("quantity");
-  const totalPriceBox = document.getElementById("totalPrice");
-  const form = document.getElementById("orderForm");
-
-  // Function to calculate total price
-  function calculatePrice() {
-    const size = bottleSize.value;
-    const qty = parseInt(quantity.value);
-    let pricePerBottle = 0;
-
-    if (size === "500") pricePerBottle = 4;
-    else if (size === "750") pricePerBottle = 6;
-    else if (size === "1000") pricePerBottle = 8;
-
-    if (size && qty > 0) {
-      totalPriceBox.textContent = "Total Price: ₹" + (pricePerBottle * qty);
-    } else {
-      totalPriceBox.textContent = "Total Price: ₹0";
-    }
-  }
-
-  bottleSize.addEventListener("change", calculatePrice);
-  quantity.addEventListener("input", calculatePrice);
-
-  // Handle form submission
-  form.addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const data = {
-      name: form.name.value,
-      phone: form.phone.value,
-      bottleSize: bottleSize.value + " ml",
-      quantity: quantity.value,
-      totalPrice: totalPriceBox.textContent.replace("Total Price: ", ""),
-      address: form.address.value
+    // Your Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyB2s4mD06y3UtZ-6xGWclkQ90OSZeMh0Fo",
+      authDomain: "brandmybottle-1d9d7.firebaseapp.com",
+      projectId: "brandmybottle-1d9d7",
+      storageBucket: "brandmybottle-1d9d7.firebasestorage.app",
+      messagingSenderId: "391458391015",
+      appId: "1:391458391015:web:7f94c96146856140a27342",
+      measurementId: "G-L3T9JMGNVF"
     };
 
-    emailjs.send("service_ooif9kc", "template_29s1yfh", data)
-      .then(() => {
-        alert("Your order has been sent successfully!");
-        form.reset();
-        totalPriceBox.textContent = "Total Price: ₹0";
-      })
-      .catch((error) => {
-        console.error("EmailJS Error:", error);
-        alert("There was an error sending your order.");
-      });
-  });
-</script>
+    // Initialize App + Auth
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    // Email Login
+    window.loginHandler = async () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        alert("Login Successful!");
+        window.location.href = "index.html"; // redirect after login
+      } catch (error) {
+        alert(error.message);
+      }
+    };
+
+    // Google Login
+    window.googleLogin = async () => {
+      try {
+        await signInWithPopup(auth, provider);
+        window.location.href = "index.html";
+      } catch (error) {
+        alert(error.message);
+      }
+    };
+  </script>
+
+  <style>
+    :root{
+      --bg:#08131f;
+      --accent:#00d1ff;
+      --accent-2:#57ffca;
+      --muted:#a6b4c3;
+    }
+    body{
+      margin:0;font-family:"Inter",sans-serif;background:var(--bg);color:#eaf4f9;
+      display:flex;align-items:center;justify-content:center;height:100vh;
+    }
+    .card{
+      background:rgba(255,255,255,0.05);padding:40px;border-radius:16px;
+      box-shadow:0 0 20px rgba(0,0,0,0.5);width:100%;max-width:400px;text-align:center;
+    }
+    h2{
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      -webkit-background-clip:text;color:transparent;margin-bottom:20px;
+    }
+    input{
+      width:100%;padding:12px;margin:10px 0;border-radius:10px;border:none;
+      background:rgba(255,255,255,0.1);color:#eaf4f9;
+    }
+    input::placeholder{color:var(--muted);}
+    button{
+      width:100%;padding:12px;margin-top:10px;border:none;border-radius:12px;font-weight:700;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#042427;cursor:pointer;
+      transition:0.2s;
+    }
+    button:hover{transform:scale(1.05);}
+    .google-btn{
+      display:flex;align-items:center;justify-content:center;gap:8px;
+      background:rgba(255,255,255,0.1);color:#eaf4f9;margin-top:12px;
+    }
+    .google-btn img{width:20px;}
+    .link{margin-top:14px;color:var(--muted);}
+    .link a{color:var(--accent-2);text-decoration:none;font-weight:600;}
+    .link a:hover{text-decoration:underline;}
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <h2>Login</h2>
+
+    <input id="email" type="email" placeholder="Email" required>
+    <input id="password" type="password" placeholder="Password" required>
+
+    <button onclick="loginHandler()">Login</button>
+
+
+
+    <div class="link">Don’t have an account? <a href="signup.html">Sign Up</a></div>
+  </div>
 
 </body>
 </html>
